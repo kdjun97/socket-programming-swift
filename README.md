@@ -2,6 +2,10 @@
 
 라이어게임을 위한 swift에서 소켓 통신 구현
 
+블로그  
+- [Liar Game](https://kdjun97.github.io/flutter/liar-game/)  
+
+사용 라이브러리  
 - [BlueSocket](https://github.com/Kitura/BlueSocket)
 
 ## History

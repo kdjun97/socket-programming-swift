@@ -13,9 +13,9 @@ import Combine
 class ViewModel: ObservableObject {
     @Published var myIPAddressString: String = ""
     @Published var counter = 0
-    private var hostServer: Socket?
-    private var client: Socket?
-    private var linkedClient: Socket?
+    private var hostServerSocket: Socket?
+    private var serverConnectedSocket: Socket? // 서버와 연결관계를 갖는 소켓
+    private var linkedClientSocket: Socket?
     @Published var serverResponse: String = ""
     @Published var clientResponse: String = ""
     private let bufferSize: Int = 4096
@@ -78,17 +78,17 @@ class ViewModel: ObservableObject {
     func startServer() {
         DispatchQueue.global(qos: .background).async {
             do {
-                self.hostServer = try Socket.create(family: .inet)
-                guard let server = self.hostServer else { return }
+                self.hostServerSocket = try Socket.create(family: .inet)
+                guard let server = self.hostServerSocket else { return }
                 
                 try server.listen(on: self.port)
-                guard let echoServer = self.hostServer else { return }
-                self.hostServer = echoServer
+                guard let server = self.hostServerSocket else { return }
+                self.hostServerSocket = server
                 
                 repeat {
                     let clientSocket = try server.acceptClientConnection()
                     print("Accepted connection from: \(clientSocket.remoteHostname)")
-                    self.linkedClient = clientSocket
+                    self.linkedClientSocket = clientSocket
                     var readData = Data(capacity: self.bufferSize)
                     
                     repeat {
@@ -110,7 +110,7 @@ class ViewModel: ObservableObject {
     }
     
     func stopServer() {
-        if let server = hostServer {
+        if let server = hostServerSocket {
             server.close()
             print("소켓 닫음")
         } else {
@@ -138,12 +138,12 @@ class ViewModel: ObservableObject {
     
     func startClient() {
         do {
-            self.client = try Socket.create(family: .inet)
-            guard let client = self.client else { return }
+            self.serverConnectedSocket = try Socket.create(family: .inet)
+            guard let client = self.serverConnectedSocket else { return }
             try client.connect(to: self.hostAddress, port: Int32(self.port))
             
             // echoClient.write : 클라이언트 -> 서버로 보냄
-            try self.client?.write(from: "handshaking ok")
+            try self.serverConnectedSocket?.write(from: "hand-shaking ok")
             DispatchQueue.global(qos: .background).async {
                 repeat {
                     self.readDataOnClientSocket(client: client)
@@ -180,14 +180,14 @@ class ViewModel: ObservableObject {
     }
     
     func stopClient() {
-        if let client = client {
+        if let client = serverConnectedSocket {
             client.close()
             print("Client close Success!")
         } else {
             print("Client Close Failed!")
         }
         
-        if let linkedClient = linkedClient {
+        if let linkedClient = linkedClientSocket {
             linkedClient.close()
             print("linkedClient close Success!")
         } else {
@@ -198,9 +198,9 @@ class ViewModel: ObservableObject {
     func sendMessageToServer(_ inputString: String) {
         print("서버로 보낼 스트링 : [\(inputString)]")
         do {
-            if let echoClient = client {
+            if let clientSocket = serverConnectedSocket {
                 // echoClient.write : 클라 -> 서버
-                try echoClient.write(from: inputString)
+                try clientSocket.write(from: inputString)
                 print("서버로 보냈다.")
             } else {
                 print("send Message Error")
@@ -213,8 +213,8 @@ class ViewModel: ObservableObject {
     func sendMessageToClient(_ inputString: String) {
         print("클라로 보낼 스트링 : [\(inputString)]")
         do {
-            if let linkedClient = linkedClient {
-                try linkedClient.write(from: inputString)
+            if let hostServerSocket = linkedClientSocket {
+                try hostServerSocket.write(from: inputString)
                 print("클라로 보냈다.")
             } else {
                 print("send Message Error")

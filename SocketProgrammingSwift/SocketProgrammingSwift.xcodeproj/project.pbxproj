@@ -14,6 +14,8 @@
 		B7B372F72B42DD9E00D81D07 /* SocketProgrammingSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B372F62B42DD9E00D81D07 /* SocketProgrammingSwiftTests.swift */; };
 		B7B373012B42DD9E00D81D07 /* SocketProgrammingSwiftUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B373002B42DD9E00D81D07 /* SocketProgrammingSwiftUITests.swift */; };
 		B7B373032B42DD9E00D81D07 /* SocketProgrammingSwiftUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B373022B42DD9E00D81D07 /* SocketProgrammingSwiftUITestsLaunchTests.swift */; };
+		B7B373122B42DF5300D81D07 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B373112B42DF5300D81D07 /* ViewModel.swift */; };
+		B7B3731C2B42FF7900D81D07 /* Socket in Frameworks */ = {isa = PBXBuildFile; productRef = B7B3731B2B42FF7900D81D07 /* Socket */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,7 @@
 		B7B372FC2B42DD9E00D81D07 /* SocketProgrammingSwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SocketProgrammingSwiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7B373002B42DD9E00D81D07 /* SocketProgrammingSwiftUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketProgrammingSwiftUITests.swift; sourceTree = "<group>"; };
 		B7B373022B42DD9E00D81D07 /* SocketProgrammingSwiftUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketProgrammingSwiftUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B7B373112B42DF5300D81D07 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7B3731C2B42FF7900D81D07 /* Socket in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +82,7 @@
 				B7B372F52B42DD9E00D81D07 /* SocketProgrammingSwiftTests */,
 				B7B372FF2B42DD9E00D81D07 /* SocketProgrammingSwiftUITests */,
 				B7B372E32B42DD9D00D81D07 /* Products */,
+				B7B3731A2B42FF7900D81D07 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -98,6 +103,7 @@
 				B7B372E72B42DD9D00D81D07 /* MyApp.swift */,
 				B7B372E92B42DD9E00D81D07 /* Assets.xcassets */,
 				B7B372EB2B42DD9E00D81D07 /* Preview Content */,
+				B7B373112B42DF5300D81D07 /* ViewModel.swift */,
 			);
 			path = SocketProgrammingSwift;
 			sourceTree = "<group>";
@@ -127,6 +133,13 @@
 			path = SocketProgrammingSwiftUITests;
 			sourceTree = "<group>";
 		};
+		B7B3731A2B42FF7900D81D07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -143,6 +156,9 @@
 			dependencies = (
 			);
 			name = SocketProgrammingSwift;
+			packageProductDependencies = (
+				B7B3731B2B42FF7900D81D07 /* Socket */,
+			);
 			productName = SocketProgrammingSwift;
 			productReference = B7B372E22B42DD9D00D81D07 /* SocketProgrammingSwift.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +231,9 @@
 				Base,
 			);
 			mainGroup = B7B372D92B42DD9D00D81D07;
+			packageReferences = (
+				B7B373192B42FCCF00D81D07 /* XCRemoteSwiftPackageReference "BlueSocket" */,
+			);
 			productRefGroup = B7B372E32B42DD9D00D81D07 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -258,6 +277,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7B372E82B42DD9D00D81D07 /* MyApp.swift in Sources */,
+				B7B373122B42DF5300D81D07 /* ViewModel.swift in Sources */,
 				B7B372E62B42DD9D00D81D07 /* SocketProgrammingSwiftApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -604,6 +624,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B7B373192B42FCCF00D81D07 /* XCRemoteSwiftPackageReference "BlueSocket" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kitura/BlueSocket";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B7B3731B2B42FF7900D81D07 /* Socket */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7B373192B42FCCF00D81D07 /* XCRemoteSwiftPackageReference "BlueSocket" */;
+			productName = Socket;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B7B372DA2B42DD9D00D81D07 /* Project object */;
 }
